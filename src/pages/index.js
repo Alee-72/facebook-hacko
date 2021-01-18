@@ -7,6 +7,7 @@ import { Card } from "@material-ui/core";
 import { usePromiseTracker } from "react-promise-tracker";
 import { trackPromise } from "react-promise-tracker";
 import Loader from "react-loader-spinner";
+import Container from '@material-ui/core/Container';
 
 const IndexPage = () => {
   const [isupdate, setisupdate] = useState(false);
@@ -85,6 +86,7 @@ const IndexPage = () => {
 
   return (
     <div>
+    
       <Formik
         initialValues={{ name: "", age: "", cnic: "" , email:"" }}
         validate={(values) => {
@@ -110,7 +112,8 @@ const IndexPage = () => {
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit }) => (
-          <Card className="card">
+        
+        <div className="card">
             <h1>CRUD APP!</h1>
             <form id="create-course-form" onSubmit={handleSubmit}>
               <TextField
@@ -170,7 +173,7 @@ const IndexPage = () => {
                 ADD
               </Button>
             </form>{" "}
-          </Card>
+          </div>
         )}
       </Formik>
 
@@ -179,8 +182,8 @@ const IndexPage = () => {
 
       <h3 alignItems="center">DATABASE </h3>
       <LoadingIndicator />
-      <>
-        <Card>
+      
+    <div className="table"> 
           <table className="customers">
             <tr className="customers tr">
               <th className="customers td ">Name</th>
@@ -230,8 +233,8 @@ const IndexPage = () => {
               );
             })}
           </table>
-        </Card>
-      </>
+          </div>
+        
     </div>
   );
 };
