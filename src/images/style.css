@@ -8,7 +8,7 @@ body{
   text-align: center;
   color: #5c3a3a;
   font-style: normal;
-  flex-basis: 200rem;
+
 
   background: url("gg.jpg") 0 0 no-repeat;
   background-size: cover;
@@ -20,7 +20,7 @@ body{
   text-align: center;
  
   font-style: normal;
-  flex-basis: 200rem;
+ 
 
 
 }
