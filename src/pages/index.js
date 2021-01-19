@@ -7,7 +7,7 @@ import { Card } from "@material-ui/core";
 import { usePromiseTracker } from "react-promise-tracker";
 import { trackPromise } from "react-promise-tracker";
 import Loader from "react-loader-spinner";
-import Container from '@material-ui/core/Container';
+
 
 const IndexPage = () => {
   const [isupdate, setisupdate] = useState(false);
@@ -85,7 +85,7 @@ const IndexPage = () => {
   }
 
   return (
-    <div>
+    <div >
     
       <Formik
         initialValues={{ name: "", age: "", cnic: "" , email:"" }}
