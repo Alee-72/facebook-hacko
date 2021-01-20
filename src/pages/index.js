@@ -3,11 +3,10 @@ import { Formik } from "formik";
 import "../images/style.css";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
-import { Card } from "@material-ui/core";
+
 import { usePromiseTracker } from "react-promise-tracker";
 import { trackPromise } from "react-promise-tracker";
 import Loader from "react-loader-spinner";
-
 
 const IndexPage = () => {
   const [isupdate, setisupdate] = useState(false);
@@ -70,25 +69,41 @@ const IndexPage = () => {
     const inputage = prompt("Enter Age");
     const inputcnic = prompt("Enter Cnic");
     const inputemail = prompt("Enter Email");
-    console.log(e.ref["@ref"].id);
-    await fetch(`/.netlify/functions/update`, {
-      method: "post",
-      body: JSON.stringify({
-        id: e.ref["@ref"].id,
-        updatename: inputname,
-        updateage: inputage,
-        updatecnic: inputcnic,
-        updateemail: inputemail,
-      }),
-    });
-    setisupdate(false);
+    const data = [inputname, inputage, inputcnic, inputemail];
+    console.log(data);
+    if (
+      data[0] == null &&
+      data[1] == null &&
+      data[2] == null &&
+      data[3] == null
+    ) {
+      console.log("data not found");
+      alert("You didnot enter any data");
+    } else {
+      updatedata(data, e);
+    }
+    async function updatedata(data, e) {
+      setisupdate(true);
+      console.log(e.ref["@ref"].id);
+      await fetch(`/.netlify/functions/update`, {
+        method: "post",
+        body: JSON.stringify({
+          id: e.ref["@ref"].id,
+
+          updatename: data[0],
+          updateage: data[1],
+          updatecnic: data[2],
+          updateemail: data[3],
+        }),
+      });
+      setisupdate(false);
+    }
   }
 
   return (
-    <div >
-    
+    <div>
       <Formik
-        initialValues={{ name: "", age: "", cnic: "" , email:"" }}
+        initialValues={{ name: "", age: "", cnic: "", email: "" }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -112,8 +127,7 @@ const IndexPage = () => {
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit }) => (
-        
-        <div className="card">
+          <div className="card">
             <h1>CRUD APP!</h1>
             <form id="create-course-form" onSubmit={handleSubmit}>
               <TextField
@@ -182,59 +196,58 @@ const IndexPage = () => {
 
       <h3 alignItems="center">DATABASE </h3>
       <LoadingIndicator />
-      
-    <div className="table"> 
-          <table className="customers">
-            <tr className="customers tr">
-              <th className="customers td ">Name</th>
-              <th className="customers td "> Email</th>
-              <th className="customers td "> Cnic</th>
-              <th className="customers td ">Age</th>
-              <th className="customers td "> Update</th>
 
-              <th className="customers td "> Delete</th>
-            </tr>
-            {mydata.map((e) => {
-              const id = e.ref["@ref"].id;
-              console.log(id);
-              return (
-                <tr className="customers tr">
-                  <td className="customers td ">{e.data.name}</td>
-                  <td className="customers td ">{e.data.email}</td>
-                  <td className="customers td ">{e.data.cnic}</td>
-                  <td className="customers td ">{e.data.age}</td>
+      <div className="table">
+        <table className="customers">
+          <tr className="customers tr">
+            <th className="customers td ">Name</th>
+            <th className="customers td "> Email</th>
+            <th className="customers td "> Cnic</th>
+            <th className="customers td ">Age</th>
+            <th className="customers td "> Update</th>
 
-                  <td>
-                    <Button
-                      style={{ fontSize: "10px", width: "3px" }}
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => {
-                        deleteid(e);
-                      }}
-                    >
-                      delete{" "}
-                    </Button>
-                  </td>
-                  <td>
-                    <Button
-                      style={{ fontSize: "10px", width: "3px", radius: "50%" }}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        updateid(e);
-                      }}
-                    >
-                      {" "}
-                      update{" "}
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </table>
-          </div>
-        
+            <th className="customers td "> Delete</th>
+          </tr>
+          {mydata.map((e) => {
+            const id = e.ref["@ref"].id;
+            console.log(id);
+            return (
+              <tr className="customers tr">
+                <td className="customers td ">{e.data.name}</td>
+                <td className="customers td ">{e.data.email}</td>
+                <td className="customers td ">{e.data.cnic}</td>
+                <td className="customers td ">{e.data.age}</td>
+
+                <td>
+                  <Button
+                    style={{ fontSize: "10px", width: "3px" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      deleteid(e);
+                    }}
+                  >
+                    delete{" "}
+                  </Button>
+                </td>
+                <td>
+                  <Button
+                    style={{ fontSize: "10px", width: "3px", radius: "50%" }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      updateid(e);
+                    }}
+                  >
+                    {" "}
+                    update{" "}
+                  </Button>
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+      </div>
     </div>
   );
 };
