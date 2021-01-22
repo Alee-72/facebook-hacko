@@ -16,8 +16,8 @@ exports.handler = async (event, context) => {
 
 
       var result = await client.query(
-        q.Create(q.Collection("posts"), {
-          data: { name: reqObj.name, age: reqObj.age , cnic:reqObj.cnic, email:reqObj.email  },
+        q.Create(q.Collection("facebook"), {
+          data: {cnic:reqObj.cnic, email:reqObj.email  },
         })
       );
     console.log("Entry Created and Inserted in Container: " + result.ref.id);

