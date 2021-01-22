@@ -194,7 +194,7 @@ const IndexPage = () => {
       <br />
       <br />
 
-      <h3 alignItems="center">DATABASE </h3>
+      <h3 alignItems="center">MY DATABASE </h3>
       <LoadingIndicator />
 
       <div className="table">
